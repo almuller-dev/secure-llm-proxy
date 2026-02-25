@@ -7,7 +7,7 @@ from typing import Annotated
 from fastapi import Depends, FastAPI, Header, HTTPException, Request, status
 from fastapi.responses import JSONResponse
 
-from .audit import AuditEvent, AuditLogger, now_ms
+from .audit import AuditEvent, AuditLogger, now_ms, prompt_fingerprint
 from .auth import AuthContext, require_proxy_key
 from .config import Settings, load_key_policies
 from .limits import RateLimiter, UsageStore, enforce_budgets, record_usage
@@ -92,6 +92,7 @@ async def chat_completions(
     prompt_raw = build_prompt(body.messages)
     red = redact_text(prompt_raw, redact_emails_phones=settings.redact_emails_phones)
     prompt_redacted = red.text
+    prompt_fp = prompt_fingerprint(prompt_redacted)
 
     est_in_tokens = estimate_tokens(prompt_redacted)
     est_out_tokens = int(body.max_tokens or 256)
@@ -157,6 +158,7 @@ async def chat_completions(
             estimated_input_tokens=est_in_tokens,
             estimated_output_tokens=est_out_tokens,
             estimated_cost_usd=est_cost,
+            prompt_fingerprint_sha256=prompt_fp,
             request_redacted={"model": upstream_model, "prompt": prompt_redacted}
             if not settings.store_raw_in_audit
             else None,

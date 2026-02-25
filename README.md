@@ -61,5 +61,7 @@ Budgets still enforce requests/day and tokens/day.
 
 ## Audit logs
 
-Audit logs are appended to `data/audit.jsonl`. By default they store redacted request content only.
+Audit logs are rotated daily as `data/audit-YYYY-MM-DD.jsonl`.
+Each event also includes `prompt_fingerprint_sha256` (hash of redacted prompt) for safe correlation.
+By default logs store redacted request content only.
 Set `STORE_RAW_IN_AUDIT=1` to include raw prompt content (not recommended outside controlled environments).
