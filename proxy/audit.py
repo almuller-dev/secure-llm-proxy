@@ -1,3 +1,5 @@
+"""Audit event models and log writers with daily rotation and prompt fingerprints."""
+
 from __future__ import annotations
 
 import hashlib

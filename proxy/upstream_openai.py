@@ -1,3 +1,5 @@
+"""OpenAI upstream client wrapper used by the proxy service layer."""
+
 from __future__ import annotations
 
 import os

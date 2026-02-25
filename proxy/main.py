@@ -1,3 +1,5 @@
+"""FastAPI application wiring for secure, budgeted, auditable LLM proxying."""
+
 from __future__ import annotations
 
 import math
@@ -17,10 +19,12 @@ from .upstream_openai import OpenAIUpstream
 
 
 def estimate_tokens(text: str) -> int:
+    """Estimate token count using a stable character-to-token heuristic."""
     return max(1, math.ceil(len(text) / 4))
 
 
 def build_prompt(messages) -> str:
+    """Serialize chat messages into a deterministic upstream prompt string."""
     parts: list[str] = []
     for m in messages:
         parts.append(f"{m.role.upper()}: {m.content}")
@@ -28,6 +32,7 @@ def build_prompt(messages) -> str:
 
 
 def estimate_cost_usd(settings: Settings, *, input_tokens: int, output_tokens: int) -> float:
+    """Estimate request cost from configured per-1k token pricing."""
     if settings.price_per_1k_input_usd <= 0 and settings.price_per_1k_output_usd <= 0:
         return 0.0
     return (input_tokens / 1000.0) * max(0.0, settings.price_per_1k_input_usd) + (
@@ -47,11 +52,13 @@ app = FastAPI(title="Secure LLM Proxy", version="0.1.0")
 def get_auth_context(
     x_proxy_key: str | None = Header(default=None, alias="X-Proxy-Key"),
 ) -> AuthContext:
+    """Resolve and validate proxy auth context from request headers."""
     return require_proxy_key(policies, x_proxy_key)
 
 
 @app.get("/health")
 def health() -> dict[str, str]:
+    """Return a lightweight readiness signal for probes and monitors."""
     return {"status": "ok"}
 
 
@@ -59,11 +66,13 @@ def health() -> dict[str, str]:
 def usage(
     ctx: Annotated[AuthContext, Depends(get_auth_context)],
 ) -> dict[str, dict[str, int | float | str]]:
+    """Return current day/month usage snapshot for the authenticated key."""
     return usage_store.snapshot(api_key=ctx.key_policy.key)
 
 
 @app.post("/v1/keys/verify")
 def verify_key(ctx: Annotated[AuthContext, Depends(get_auth_context)]) -> dict[str, bool | str]:
+    """Validate the presented proxy key and return tenant metadata."""
     return {"ok": True, "tenant": ctx.key_policy.tenant}
 
 
@@ -73,6 +82,7 @@ async def chat_completions(
     body: ChatCompletionsRequest,
     ctx: Annotated[AuthContext, Depends(get_auth_context)],
 ):
+    """Handle proxy chat requests with policy checks, auditing, and upstream routing."""
     t0 = time.time()
     request_id = audit.new_request_id()
 

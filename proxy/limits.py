@@ -1,3 +1,5 @@
+"""Rate-limiting and usage accounting helpers backed by SQLite."""
+
 from __future__ import annotations
 
 import sqlite3

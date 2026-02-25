@@ -1,3 +1,5 @@
+"""Environment-backed settings and per-key budget policy loading utilities."""
+
 from __future__ import annotations
 
 import json

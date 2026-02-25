@@ -1,3 +1,5 @@
+"""Sensitive-data redaction utilities for prompts and audit-safe content capture."""
+
 from __future__ import annotations
 
 import re
