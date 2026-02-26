@@ -1,3 +1,10 @@
+"""
+#########################################
+##      created by: Al Muller
+##       filename: tests/test_redaction.py
+#########################################
+"""
+
 from proxy.redaction import redact_text
 
 

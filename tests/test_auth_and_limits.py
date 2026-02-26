@@ -1,3 +1,10 @@
+"""
+#########################################
+##      created by: Al Muller
+##       filename: tests/test_auth_and_limits.py
+#########################################
+"""
+
 from pathlib import Path
 
 import pytest

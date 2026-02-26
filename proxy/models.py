@@ -1,4 +1,9 @@
-"""Request and response schemas for proxy chat completion endpoints."""
+"""
+#########################################
+##      created by: Al Muller
+##       filename: proxy/models.py
+#########################################
+"""
 
 from __future__ import annotations
 

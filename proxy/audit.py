@@ -1,4 +1,9 @@
-"""Audit event models and log writers with daily rotation and prompt fingerprints."""
+"""
+#########################################
+##      created by: Al Muller
+##       filename: proxy/audit.py
+#########################################
+"""
 
 from __future__ import annotations
 
@@ -14,6 +19,8 @@ from typing import Any
 
 @dataclass(frozen=True)
 class AuditEvent:
+    """Structured audit payload captured for each proxy request lifecycle."""
+
     request_id: str
     ts_ms: int
     tenant: str
@@ -32,6 +39,8 @@ class AuditEvent:
 
 
 class AuditLogger:
+    """Append-only JSONL audit logger with UTC day-based file rotation."""
+
     def __init__(self, path: Path) -> None:
         self.path = path
         self.path.parent.mkdir(parents=True, exist_ok=True)
@@ -51,8 +60,10 @@ class AuditLogger:
 
 
 def now_ms() -> int:
+    """Return current epoch time in milliseconds."""
     return int(time.time() * 1000)
 
 
 def prompt_fingerprint(text: str) -> str:
+    """Compute a stable SHA-256 fingerprint for redacted prompt content."""
     return hashlib.sha256(text.encode("utf-8")).hexdigest()

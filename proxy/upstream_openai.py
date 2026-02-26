@@ -1,4 +1,9 @@
-"""OpenAI upstream client wrapper used by the proxy service layer."""
+"""
+#########################################
+##      created by: Al Muller
+##       filename: proxy/upstream_openai.py
+#########################################
+"""
 
 from __future__ import annotations
 

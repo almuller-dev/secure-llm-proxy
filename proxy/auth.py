@@ -1,4 +1,9 @@
-"""Proxy key authentication primitives and request authorization context."""
+"""
+#########################################
+##      created by: Al Muller
+##       filename: proxy/auth.py
+#########################################
+"""
 
 from __future__ import annotations
 

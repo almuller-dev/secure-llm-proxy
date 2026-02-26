@@ -1,1 +1,6 @@
-"""Secure LLM Proxy package with policy, limits, redaction, and audit modules."""
+"""
+#########################################
+##      created by: Al Muller
+##       filename: proxy/__init__.py
+#########################################
+"""

@@ -1,4 +1,9 @@
-"""Sensitive-data redaction utilities for prompts and audit-safe content capture."""
+"""
+#########################################
+##      created by: Al Muller
+##       filename: proxy/redaction.py
+#########################################
+"""
 
 from __future__ import annotations
 

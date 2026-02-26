@@ -1,4 +1,9 @@
-"""FastAPI application wiring for secure, budgeted, auditable LLM proxying."""
+"""
+#########################################
+##      created by: Al Muller
+##       filename: proxy/main.py
+#########################################
+"""
 
 from __future__ import annotations
 

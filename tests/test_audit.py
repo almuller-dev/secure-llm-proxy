@@ -1,3 +1,10 @@
+"""
+#########################################
+##      created by: Al Muller
+##       filename: tests/test_audit.py
+#########################################
+"""
+
 import json
 
 from proxy.audit import AuditEvent, AuditLogger, prompt_fingerprint

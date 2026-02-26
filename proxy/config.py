@@ -1,4 +1,9 @@
-"""Environment-backed settings and per-key budget policy loading utilities."""
+"""
+#########################################
+##      created by: Al Muller
+##       filename: proxy/config.py
+#########################################
+"""
 
 from __future__ import annotations
 
